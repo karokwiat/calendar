@@ -1,4 +1,4 @@
-import { weekDays, daysInEachMonth } from "./consts";
+import { daysInEachMonth } from './consts';
 
 export function generateMatrix(currentDate: Date) {
   let matrix: number[][] = [];

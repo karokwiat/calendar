@@ -1,25 +1,29 @@
-import { Box } from '@chakra-ui/react'
-import type { FC } from 'react'
+import {
+  Box,
+  Editable,
+  EditableInput,
+  EditablePreview,
+  IconButton,
+  Text,
+} from '@chakra-ui/react';
+import type { FC } from 'react';
+import { DefaultTheme } from '../../assets/styles/theme';
+import { MdAdd } from 'react-icons/md';
+import EventAdd from './EventAdd';
+import EventItem from './EventItem';
 
 type Props = {
-  param?: string
-}
+  param?: string;
+};
 
 const Events: FC<Props> = () => {
   return (
-    <Box 
-      w='500px'
-      bg='white'
-      h='80px'
-      borderRadius='13px'
-      boxShadow='0 0 99px 0px rgba(0, 0, 0, 0.04)'
-      display='flex'
-      justifyContent='center'
-      alignItems='center'
-    >
-      <p>Events</p>
+    <Box>
+      <EventAdd />
+      <EventItem />
+      <EventItem />
     </Box>
-  )
-}
+  );
+};
 
-export default Events
+export default Events;

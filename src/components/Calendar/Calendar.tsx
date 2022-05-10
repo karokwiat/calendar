@@ -1,10 +1,10 @@
-import type { FC } from "react";
-import { useState, useEffect } from "react";
-import { Box, IconButton, Text } from "@chakra-ui/react";
-import { MdArrowForwardIos, MdArrowBackIosNew } from "react-icons/md";
-import { months } from "./consts";
-import { generateMatrix } from "./utils";
-import { DefaultTheme } from "../../theme";
+import type { FC } from 'react';
+import { useState, useEffect } from 'react';
+import { Box, IconButton, Text } from '@chakra-ui/react';
+import { MdArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md';
+import { months } from './consts';
+import { generateMatrix } from './utils';
+import { DefaultTheme } from '../../assets/styles/theme';
 
 type Props = {
   date: Date;
@@ -13,8 +13,6 @@ type Props = {
 const Calendar: FC<Props> = ({ date = new Date() }: { date: Date }) => {
   const [activeDate, setActiveDate] = useState(date);
 
-  const today = date;
-
   useEffect(() => {
     if (activeDate != date) {
       setActiveDate(date);
@@ -22,7 +20,7 @@ const Calendar: FC<Props> = ({ date = new Date() }: { date: Date }) => {
   }, [date]);
 
   const _onClick = (item: number) => {
-    if (typeof item !== "string" && item != -1) {
+    if (typeof item !== 'string' && item != -1) {
       const newDate = new Date(activeDate.setDate(item));
       setActiveDate(newDate);
     }
@@ -59,7 +57,7 @@ const Calendar: FC<Props> = ({ date = new Date() }: { date: Date }) => {
             bottom="4px"
             fontSize={DefaultTheme.fontSize.s}
           >
-            {item != -1 ? `${item}.` : ""}
+            {item != -1 ? `${item}.` : ''}
           </Text>
         </Box>
       );
@@ -84,78 +82,73 @@ const Calendar: FC<Props> = ({ date = new Date() }: { date: Date }) => {
   };
 
   return (
-    <Box
-      w="504px"
-      bg={DefaultTheme.colors.white}
-      h="390px"
-      borderRadius="13px"
-      boxShadow={`0 0 99px 0px ${DefaultTheme.colors.boxShadow}`}
-      mb="10"
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-    >
+    <Box>
       <Box
-        h="100%"
+        w="504px"
+        bg={DefaultTheme.colors.white}
+        h="390px"
+        borderRadius="13px"
+        boxShadow={`0 0 99px 0px ${DefaultTheme.colors.boxShadow}`}
+        mb="10"
         display="flex"
-        justifyContent="space-between"
-        fontSize={DefaultTheme.fontSize.s}
+        flexDirection="column"
+        justifyContent="center"
       >
-        <Box h="100%" w="100%" display="flex" alignItems="center">
-          <Text marginLeft="31px" fontFamily="Avenir Heavy">{`${
-            months[activeDate.getMonth()]
-          }`}</Text>
-          <Text marginLeft="5px">{`${activeDate.getFullYear()}`}</Text>
+        <Box
+          h="100%"
+          display="flex"
+          justifyContent="space-between"
+          fontSize={DefaultTheme.fontSize.s}
+        >
+          <Box h="100%" w="100%" display="flex" alignItems="center">
+            <Text marginLeft="31px" fontFamily="Avenir Heavy">{`${
+              months[activeDate.getMonth()]
+            }`}</Text>
+            <Text marginLeft="5px">{`${activeDate.getFullYear()}`}</Text>
+          </Box>
+          <Box display="flex" alignItems="center" marginRight="22px">
+            <IconButton
+              aria-label="Previous Day"
+              bg={DefaultTheme.colors.primaryButton}
+              color={DefaultTheme.colors.white}
+              isRound
+              size="sm"
+              fontSize="15px"
+              icon={<MdArrowBackIosNew />}
+              onClick={() => changeMonth(-1)}
+            ></IconButton>
+            <Text
+              margin="22px"
+              fontFamily={DefaultTheme.fontFamily.medium}
+              color={DefaultTheme.colors.primaryButton}
+              cursor="pointer"
+              onClick={() => {
+                setActiveDate(new Date());
+              }}
+            >
+              Today
+            </Text>
+            <IconButton
+              aria-label="Next Day"
+              bg={DefaultTheme.colors.primaryButton}
+              color={DefaultTheme.colors.white}
+              isRound
+              size="sm"
+              fontSize="15px"
+              icon={<MdArrowForwardIos />}
+              onClick={() => changeMonth(+1)}
+            ></IconButton>
+          </Box>
         </Box>
-        <Box display="flex" alignItems="center" marginRight="22px">
-          <IconButton
-            aria-label="Previous Day"
-            bg={DefaultTheme.colors.primaryButton}
-            color={DefaultTheme.colors.white}
-            isRound
-            size="xs"
-            fontSize="15px"
-            icon={<MdArrowBackIosNew />}
-            onClick={() => changeMonth(-1)}
-          ></IconButton>
-          {/* <Text
-            marginLeft="22px"
-            marginRight="5px"
-            fontFamily={DefaultTheme.fontFamily.medium}
-            color={DefaultTheme.colors.primaryButton}
-          >
-            {`${months[activeDate.getMonth()].substring(0, 3)}`}
-          </Text>
-          <Text
-            marginRight="22px"
-            fontFamily={DefaultTheme.fontFamily.medium}
-            color={DefaultTheme.colors.primaryButton}
-          >{`${activeDate.getDate()}.`}</Text> */}
-          <Text
-            margin="22px"
-            fontFamily={DefaultTheme.fontFamily.medium}
-            color={DefaultTheme.colors.primaryButton}
-            cursor="pointer"
-            onClick={() => {
-              setActiveDate(new Date());
-            }}
-          >
-            Today
-          </Text>
-          <IconButton
-            aria-label="Next Day"
-            bg={DefaultTheme.colors.primaryButton}
-            color={DefaultTheme.colors.white}
-            isRound
-            size="xs"
-            fontSize="15px"
-            icon={<MdArrowForwardIos />}
-            onClick={() => changeMonth(+1)}
-          ></IconButton>
+        <Box w="100%" display="flex" flexDirection="column">
+          <Box>{rows}</Box>
         </Box>
       </Box>
-      <Box w="100%" display="flex" flexDirection="column">
-        <Box>{rows}</Box>
+      <Box marginLeft="22px" marginBottom="10px">
+        <Text
+          fontSize={DefaultTheme.fontSize.l}
+          fontFamily={DefaultTheme.fontFamily.light}
+        >{`${months[activeDate.getMonth()]} ${activeDate.getDate()}`}</Text>
       </Box>
     </Box>
   );
