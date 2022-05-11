@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Box, Center } from '@chakra-ui/react';
 import Calendar from './components/Calendar/Calendar';
-import Events from './components/Events/Events';
+import Tasks from './components/Tasks/Tasks';
 import { DefaultTheme } from './assets/styles/theme';
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
       <Center>
         <Box>
           <Calendar date={value} />
-          <Events />
+          <Tasks date={value} />
         </Box>
       </Center>
     </Box>

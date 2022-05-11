@@ -6,15 +6,17 @@ import {
   IconButton,
   Text,
 } from '@chakra-ui/react';
-import type { FC } from 'react';
+import type { ChangeEvent, FC } from 'react';
 import { DefaultTheme } from '../../assets/styles/theme';
 import { MdAdd } from 'react-icons/md';
 
 type Props = {
-  param?: string;
+  value: string;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onClick: () => void;
 };
 
-const EventAdd: FC<Props> = () => {
+const TaskAdd: FC<Props> = ({ value, onChange, onClick }) => {
   return (
     <Box
       w="500px"
@@ -33,7 +35,7 @@ const EventAdd: FC<Props> = () => {
         fontSize={DefaultTheme.fontSize.m}
       >
         <EditablePreview opacity="42%" />
-        <EditableInput onChange={() => console.log('hande on change')} />
+        <EditableInput value={value} onChange={onChange} />
       </Editable>
       <IconButton
         aria-label="Previous Day"
@@ -44,10 +46,10 @@ const EventAdd: FC<Props> = () => {
         size="sm"
         fontSize="20px"
         icon={<MdAdd />}
-        onClick={() => console.log('added')}
+        onClick={onClick}
       ></IconButton>
     </Box>
   );
 };
 
-export default EventAdd;
+export default TaskAdd;

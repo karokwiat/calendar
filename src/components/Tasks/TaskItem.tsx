@@ -2,12 +2,15 @@ import { Box, IconButton, Text } from '@chakra-ui/react';
 import type { FC } from 'react';
 import { DefaultTheme } from '../../assets/styles/theme';
 import { MdClose } from 'react-icons/md';
+import { ITask } from './Interfaces';
 
 type Props = {
-  param?: string;
+  key: number;
+  task: ITask;
+  complete: (taskNameToDelete: string) => void;
 };
 
-const EventItem: FC<Props> = () => {
+const TaskItem: FC<Props> = ({ key, task, complete }) => {
   return (
     <Box
       w="500px"
@@ -21,7 +24,7 @@ const EventItem: FC<Props> = () => {
       margin="12px 0 12px 0"
     >
       <Text marginLeft="22px" fontSize={DefaultTheme.fontSize.m}>
-        Some task
+        {task.taskName}
       </Text>
       <IconButton
         aria-label="Previous Day"
@@ -32,10 +35,10 @@ const EventItem: FC<Props> = () => {
         size="xs"
         fontSize="15px"
         icon={<MdClose />}
-        onClick={() => console.log('deleted')}
+        onClick={() => complete(task.taskName)}
       ></IconButton>
     </Box>
   );
 };
 
-export default EventItem;
+export default TaskItem;
