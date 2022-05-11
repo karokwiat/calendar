@@ -13,10 +13,11 @@ import { MdAdd } from 'react-icons/md';
 type Props = {
   value: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onClick: () => void;
+  onClick: (event: React.MouseEvent<HTMLElement>) => void;
+  onKeyPress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
-const TaskAdd: FC<Props> = ({ value, onChange, onClick }) => {
+const TaskAdd: FC<Props> = ({ value, onChange, onClick, onKeyPress }) => {
   return (
     <Box
       w="500px"
@@ -35,7 +36,11 @@ const TaskAdd: FC<Props> = ({ value, onChange, onClick }) => {
         fontSize={DefaultTheme.fontSize.m}
       >
         <EditablePreview opacity="42%" />
-        <EditableInput value={value} onChange={onChange} />
+        <EditableInput
+          value={value}
+          onChange={onChange}
+          onKeyPress={onKeyPress}
+        />
       </Editable>
       <IconButton
         aria-label="Previous Day"

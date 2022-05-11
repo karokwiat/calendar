@@ -32,12 +32,22 @@ const Tasks: FC<Props> = ({ activeDate }) => {
   };
 
   const addTask = () => {
-    //setTaskDate(activeDate);
     const newTask = { taskName: task, date: taskDate };
     setTasksList([...tasksList, newTask]);
     console.log(tasksList);
 
     setTask('');
+  };
+
+  const handleSubmit = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    addTask();
+  };
+
+  const handleKeypress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      addTask();
+    }
   };
 
   const completeTask = (taskNameToDelete: string): void => {
@@ -50,10 +60,19 @@ const Tasks: FC<Props> = ({ activeDate }) => {
 
   return (
     <Box>
-      <TaskAdd value={task} onChange={handleChange} onClick={addTask} />
+      <TaskAdd
+        value={task}
+        onChange={handleChange}
+        onClick={handleSubmit}
+        onKeyPress={handleKeypress}
+      />
       {tasksList
         .filter((task: ITask) => {
-          return task.date == activeDate;
+          return (
+            task.date.getDate() == activeDate.getDate() &&
+            task.date.getMonth() == activeDate.getMonth() &&
+            task.date.getFullYear() == activeDate.getFullYear()
+          );
         })
         .map((task: ITask) => (
           <TaskItem task={task} complete={completeTask} />
