@@ -1,11 +1,34 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Center } from '@chakra-ui/react';
 import Calendar from './components/Calendar/Calendar';
 import Tasks from './components/Tasks/Tasks';
 import { DefaultTheme } from './assets/styles/theme';
 
 function App() {
-  const [value, setValue] = useState(new Date());
+  const [date, setDate] = useState<Date>(new Date());
+  const [activeDate, setActiveDate] = useState<Date>(date);
+
+  useEffect(() => {
+    if (activeDate != date) {
+      setActiveDate(date);
+    }
+  }, [date]);
+
+  const onClick = (item: number) => {
+    if (typeof item !== 'string' && item != -1) {
+      const newDate = new Date(activeDate.setDate(item));
+      setActiveDate(newDate);
+    }
+  };
+
+  const changeMonth = (n: number) => {
+    const newDate = new Date(activeDate.setMonth(activeDate.getMonth() + n));
+    setActiveDate(newDate);
+  };
+
+  const setToday = () => {
+    setActiveDate(new Date());
+  };
 
   return (
     <Box
@@ -18,8 +41,13 @@ function App() {
     >
       <Center>
         <Box>
-          <Calendar date={value} />
-          <Tasks date={value} />
+          <Calendar
+            activeDate={activeDate}
+            onClick={onClick}
+            changeMonth={changeMonth}
+            setToday={setToday}
+          />
+          <Tasks activeDate={activeDate} />
         </Box>
       </Center>
     </Box>

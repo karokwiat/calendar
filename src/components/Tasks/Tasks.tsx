@@ -1,23 +1,38 @@
 import { Box } from '@chakra-ui/react';
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import TaskAdd from './TaskAdd';
 import TaskItem from './TaskItem';
 import { ITask } from './Interfaces';
 
 type Props = {
-  date: Date;
+  activeDate: Date;
 };
 
-const Tasks: FC<Props> = ({ date }) => {
+const Tasks: FC<Props> = ({ activeDate }) => {
   const [task, setTask] = useState<string>('');
-  const [taskDate, setTaskDate] = useState<Date>(date);
+  const [taskDate, setTaskDate] = useState<Date>(activeDate);
   const [tasksList, setTasksList] = useState<ITask[]>([]);
+
+  useEffect(() => {
+    if (taskDate != activeDate) {
+      setTaskDate(activeDate);
+      console.log(taskDate);
+    }
+  }, [activeDate]);
+
+  useEffect(() => {
+    if (tasksList == []) {
+      addTask();
+      console.log(tasksList);
+    }
+  });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTask(event.target.value);
   };
 
   const addTask = () => {
+    //setTaskDate(activeDate);
     const newTask = { taskName: task, date: taskDate };
     setTasksList([...tasksList, newTask]);
     console.log(tasksList);
@@ -36,9 +51,13 @@ const Tasks: FC<Props> = ({ date }) => {
   return (
     <Box>
       <TaskAdd value={task} onChange={handleChange} onClick={addTask} />
-      {tasksList.map((task: ITask, key: number) => (
-        <TaskItem key={key} task={task} complete={completeTask} />
-      ))}
+      {tasksList
+        .filter((task: ITask) => {
+          return task.date == activeDate;
+        })
+        .map((task: ITask) => (
+          <TaskItem task={task} complete={completeTask} />
+        ))}
     </Box>
   );
 };

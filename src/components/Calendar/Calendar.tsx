@@ -7,31 +7,24 @@ import { generateMatrix } from './utils';
 import { DefaultTheme } from '../../assets/styles/theme';
 
 type Props = {
-  date: Date;
+  activeDate: Date;
+  onClick: (item: number) => void;
+  changeMonth: (n: number) => void;
+  setToday: () => void;
 };
 
-const Calendar: FC<Props> = ({ date = new Date() }: { date: Date }) => {
-  const [activeDate, setActiveDate] = useState(date);
-
-  useEffect(() => {
-    if (activeDate != date) {
-      setActiveDate(date);
-    }
-  }, [date]);
-
-  const _onClick = (item: number) => {
-    if (typeof item !== 'string' && item != -1) {
-      const newDate = new Date(activeDate.setDate(item));
-      setActiveDate(newDate);
-    }
-  };
-
-  const matrix = generateMatrix(activeDate);
+const Calendar: FC<Props> = ({
+  activeDate,
+  onClick,
+  changeMonth,
+  setToday,
+}) => {
+  const calendarMatrix = generateMatrix(activeDate);
 
   let rows = [];
 
-  rows = matrix.map((row) => {
-    let rowItems = row.map((item: any) => {
+  rows = calendarMatrix.map((row) => {
+    let rowItems = row.map((item: number) => {
       return (
         <Box
           w="72px"
@@ -49,7 +42,7 @@ const Calendar: FC<Props> = ({ date = new Date() }: { date: Date }) => {
               : DefaultTheme.colors.text
           }
           cursor="pointer"
-          onClick={() => _onClick(item)}
+          onClick={() => onClick(item)}
         >
           <Text
             position="absolute"
@@ -75,11 +68,6 @@ const Calendar: FC<Props> = ({ date = new Date() }: { date: Date }) => {
       </Box>
     );
   });
-
-  const changeMonth = (n: number) => {
-    const newDate = new Date(activeDate.setMonth(activeDate.getMonth() + n));
-    setActiveDate(newDate);
-  };
 
   return (
     <Box>
@@ -122,9 +110,7 @@ const Calendar: FC<Props> = ({ date = new Date() }: { date: Date }) => {
               fontFamily={DefaultTheme.fontFamily.medium}
               color={DefaultTheme.colors.primaryButton}
               cursor="pointer"
-              onClick={() => {
-                setActiveDate(new Date());
-              }}
+              onClick={setToday}
             >
               Today
             </Text>
