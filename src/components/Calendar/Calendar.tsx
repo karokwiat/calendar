@@ -41,7 +41,7 @@ const Calendar: FC<Props> = ({ date = new Date() }: { date: Date }) => {
           bg={
             item == activeDate.getDate()
               ? DefaultTheme.colors.activeDate
-              : DefaultTheme.colors.white
+              : DefaultTheme.colors.transparent
           }
           color={
             item == activeDate.getDate()

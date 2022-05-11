@@ -1,14 +1,5 @@
-import {
-  Box,
-  Editable,
-  EditableInput,
-  EditablePreview,
-  IconButton,
-  Text,
-} from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import type { FC } from 'react';
-import { DefaultTheme } from '../../assets/styles/theme';
-import { MdAdd } from 'react-icons/md';
 import EventAdd from './EventAdd';
 import EventItem from './EventItem';
 
