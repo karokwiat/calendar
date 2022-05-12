@@ -1,5 +1,4 @@
 import type { FC } from 'react';
-import { useState, useEffect } from 'react';
 import { Box, IconButton, Text } from '@chakra-ui/react';
 import { MdArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md';
 import { months } from './consts';

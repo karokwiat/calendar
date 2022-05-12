@@ -6,39 +6,21 @@ import { ITask } from './Interfaces';
 
 type Props = {
   activeDate: Date;
+  task: string;
+  tasksList: ITask[];
+  addTask: () => void;
+  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  completeTask: (taskNameToDelete: string) => void;
 };
 
-const Tasks: FC<Props> = ({ activeDate }) => {
-  const [task, setTask] = useState<string>('');
-  const [taskDate, setTaskDate] = useState<Date>(activeDate);
-  const [tasksList, setTasksList] = useState<ITask[]>([]);
-
-  useEffect(() => {
-    if (taskDate != activeDate) {
-      setTaskDate(activeDate);
-      console.log(taskDate);
-    }
-  }, [activeDate]);
-
-  useEffect(() => {
-    if (tasksList == []) {
-      addTask();
-      console.log(tasksList);
-    }
-  });
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTask(event.target.value);
-  };
-
-  const addTask = () => {
-    const newTask = { taskName: task, date: taskDate };
-    setTasksList([...tasksList, newTask]);
-    console.log(tasksList);
-
-    setTask('');
-  };
-
+const Tasks: FC<Props> = ({
+  activeDate,
+  task,
+  tasksList,
+  addTask,
+  handleChange,
+  completeTask,
+}) => {
   const handleSubmit = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     addTask();
@@ -48,14 +30,6 @@ const Tasks: FC<Props> = ({ activeDate }) => {
     if (event.key === 'Enter') {
       addTask();
     }
-  };
-
-  const completeTask = (taskNameToDelete: string): void => {
-    setTasksList(
-      tasksList.filter((task) => {
-        return task.taskName != taskNameToDelete;
-      })
-    );
   };
 
   return (

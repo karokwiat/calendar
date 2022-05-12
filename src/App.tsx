@@ -3,18 +3,19 @@ import { Box, Center } from '@chakra-ui/react';
 import Calendar from './components/Calendar/Calendar';
 import Tasks from './components/Tasks/Tasks';
 import { DefaultTheme } from './assets/styles/theme';
+import { ITask } from './components/Tasks/Interfaces';
 
 function App() {
-  const [date, setDate] = useState<Date>(new Date());
-  const [activeDate, setActiveDate] = useState<Date>(date);
-
-  useEffect(() => {
-    if (activeDate != date) {
-      setActiveDate(date);
-    }
-  }, [date]);
+  const [task, setTask] = useState<string>('');
+  const [taskDate, setTaskDate] = useState<Date>(new Date());
+  const [tasksList, setTasksList] = useState<ITask[]>([]);
+  const [activeDate, setActiveDate] = useState<Date>(new Date());
 
   const onClick = (item: number) => {
+    if (taskDate != activeDate) {
+      setTaskDate(activeDate);
+      setTask('');
+    }
     if (typeof item !== 'string' && item != -1) {
       const newDate = new Date(activeDate.setDate(item));
       setActiveDate(newDate);
@@ -28,6 +29,25 @@ function App() {
 
   const setToday = () => {
     setActiveDate(new Date());
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTask(event.target.value);
+  };
+
+  const addTask = () => {
+    setTask('');
+    const newTask = { taskName: task, date: taskDate };
+    setTasksList([...tasksList, newTask]);
+    console.log(tasksList);
+  };
+
+  const completeTask = (taskNameToDelete: string): void => {
+    setTasksList(
+      tasksList.filter((task) => {
+        return task.taskName != taskNameToDelete;
+      })
+    );
   };
 
   return (
@@ -47,7 +67,14 @@ function App() {
             changeMonth={changeMonth}
             setToday={setToday}
           />
-          <Tasks activeDate={activeDate} />
+          <Tasks
+            activeDate={activeDate}
+            task={task}
+            tasksList={tasksList}
+            addTask={addTask}
+            handleChange={handleChange}
+            completeTask={completeTask}
+          />
         </Box>
       </Center>
     </Box>

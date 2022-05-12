@@ -4,7 +4,6 @@ import {
   EditableInput,
   EditablePreview,
   IconButton,
-  Text,
 } from '@chakra-ui/react';
 import type { ChangeEvent, FC } from 'react';
 import { DefaultTheme } from '../../assets/styles/theme';
