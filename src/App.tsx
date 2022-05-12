@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Box, Center } from '@chakra-ui/react';
 import Calendar from './components/Calendar/Calendar';
 import Tasks from './components/Tasks/Tasks';
@@ -14,7 +14,6 @@ function App() {
   const onClickDate = (item: number) => {
     if (taskDate != activeDate) {
       setTaskDate(activeDate);
-      setTask('');
     }
     if (typeof item !== 'string' && item != -1) {
       const newDate = new Date(activeDate.setDate(item));
@@ -38,10 +37,14 @@ function App() {
   };
 
   const addTask = () => {
-    setTask('');
     const newTask = { taskName: task, date: taskDate };
     setTasksList([...tasksList, newTask]);
-    console.log(tasksList);
+  };
+
+  const handleSubmitTask = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    addTask();
+    setTask('');
   };
 
   const completeTask = (taskNameToDelete: string): void => {
@@ -76,6 +79,7 @@ function App() {
             addTask={addTask}
             handleChange={handleTaskInputChange}
             completeTask={completeTask}
+            onClick={handleSubmitTask}
           />
         </Box>
       </Center>
