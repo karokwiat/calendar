@@ -11,7 +11,7 @@ function App() {
   const [tasksList, setTasksList] = useState<ITask[]>([]);
   const [activeDate, setActiveDate] = useState<Date>(new Date());
 
-  const onClick = (item: number) => {
+  const onClickDate = (item: number) => {
     if (taskDate != activeDate) {
       setTaskDate(activeDate);
       setTask('');
@@ -31,7 +31,9 @@ function App() {
     setActiveDate(new Date());
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTaskInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setTask(event.target.value);
   };
 
@@ -63,7 +65,7 @@ function App() {
         <Box>
           <Calendar
             activeDate={activeDate}
-            onClick={onClick}
+            onClick={onClickDate}
             changeMonth={changeMonth}
             setToday={setToday}
           />
@@ -72,7 +74,7 @@ function App() {
             task={task}
             tasksList={tasksList}
             addTask={addTask}
-            handleChange={handleChange}
+            handleChange={handleTaskInputChange}
             completeTask={completeTask}
           />
         </Box>
