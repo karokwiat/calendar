@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC } from 'react';
 import TaskAdd from './TaskAdd';
 import TaskItem from './TaskItem';
 import { ITask } from './Interfaces';
@@ -11,6 +11,7 @@ type Props = {
   addTask: () => void;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
   completeTask: (taskNameToDelete: string) => void;
+  onClick: (event: React.MouseEvent<HTMLElement>) => void;
 };
 
 const Tasks: FC<Props> = ({
@@ -20,12 +21,8 @@ const Tasks: FC<Props> = ({
   addTask,
   handleChange,
   completeTask,
+  onClick,
 }) => {
-  const handleSubmit = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    addTask();
-  };
-
   const handleKeypress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       addTask();
@@ -37,7 +34,7 @@ const Tasks: FC<Props> = ({
       <TaskAdd
         value={task}
         onChange={handleChange}
-        onClick={handleSubmit}
+        onClick={onClick}
         onKeyPress={handleKeypress}
       />
       {tasksList
