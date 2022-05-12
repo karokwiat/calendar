@@ -5,12 +5,11 @@ import { MdClose } from 'react-icons/md';
 import { ITask } from './Interfaces';
 
 type Props = {
-  key: number;
   task: ITask;
   complete: (taskNameToDelete: string) => void;
 };
 
-const TaskItem: FC<Props> = ({ key, task, complete }) => {
+const TaskItem: FC<Props> = ({ task, complete }) => {
   return (
     <Box
       w="500px"
