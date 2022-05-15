@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 import { ChangeEvent, FC } from 'react';
 import TaskAdd from './TaskAdd';
 import TaskItem from './TaskItem';
-import { ITask } from './Interfaces';
+import { ITask } from '../../interfaces/Interfaces';
 
 type Props = {
   activeDate: Date;

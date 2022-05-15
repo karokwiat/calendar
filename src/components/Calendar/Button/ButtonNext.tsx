@@ -4,10 +4,11 @@ import { MdArrowForwardIos } from 'react-icons/md';
 import { DefaultTheme } from '../../../assets/styles/theme';
 
 type Props = {
-  changeMonth: (n: number) => void;
+  activeDate: Date;
+  onClick: (day: number, month: number) => void;
 };
 
-const ButtonNext: FC<Props> = ({ changeMonth }) => {
+const ButtonNext: FC<Props> = ({ activeDate, onClick }) => {
   return (
     <IconButton
       aria-label="Next Day"
@@ -17,7 +18,7 @@ const ButtonNext: FC<Props> = ({ changeMonth }) => {
       size="sm"
       fontSize="15px"
       icon={<MdArrowForwardIos />}
-      onClick={() => changeMonth(+1)}
+      onClick={() => onClick(activeDate.getDate(), activeDate.getMonth() + 1)}
     ></IconButton>
   );
 };

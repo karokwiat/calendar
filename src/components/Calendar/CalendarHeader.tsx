@@ -1,17 +1,18 @@
 import type { FC } from 'react';
 import { Box, Text } from '@chakra-ui/react';
-import { months } from './consts';
+import { months } from '../../consts/consts';
 import { DefaultTheme } from '../../assets/styles/theme';
 import ButtonNext from './Button/ButtonNext';
 import ButtonPrevious from './Button/ButtonPrevious';
 
 type Props = {
   activeDate: Date;
-  changeMonth: (n: number) => void;
-  setToday: () => void;
+  onClick: (day: number, month: number) => void;
 };
 
-const CalendarHeader: FC<Props> = ({ activeDate, changeMonth, setToday }) => {
+const CalendarHeader: FC<Props> = ({ activeDate, onClick }) => {
+  const today = new Date();
+
   return (
     <Box
       h="100%"
@@ -26,17 +27,17 @@ const CalendarHeader: FC<Props> = ({ activeDate, changeMonth, setToday }) => {
         <Text marginLeft="5px">{`${activeDate.getFullYear()}`}</Text>
       </Box>
       <Box display="flex" alignItems="center" marginRight="22px">
-        <ButtonPrevious changeMonth={changeMonth} />
+        <ButtonPrevious activeDate={activeDate} onClick={onClick} />
         <Text
           margin="22px"
           fontFamily={DefaultTheme.fontFamily.medium}
           color={DefaultTheme.colors.primaryButton}
           cursor="pointer"
-          onClick={setToday}
+          onClick={() => onClick(today.getDate(), today.getMonth())}
         >
           Today
         </Text>
-        <ButtonNext changeMonth={changeMonth} />
+        <ButtonNext activeDate={activeDate} onClick={onClick} />
       </Box>
     </Box>
   );
