@@ -39,6 +39,7 @@ const TaskAdd: FC<Props> = ({ value, onChange, onClick, onKeyPress }) => {
           value={value}
           onChange={onChange}
           onKeyPress={onKeyPress}
+          w="400px"
         />
       </Editable>
       <IconButton

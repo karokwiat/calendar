@@ -3,7 +3,7 @@ import { Box, Center } from '@chakra-ui/react';
 import Calendar from './components/Calendar/Calendar';
 import Tasks from './components/Tasks/Tasks';
 import { DefaultTheme } from './assets/styles/theme';
-import { ITask } from './components/Tasks/Interfaces';
+import { ITask } from './interfaces/Interfaces';
 
 function App() {
   const [task, setTask] = useState<string>('');
@@ -11,23 +11,16 @@ function App() {
   const [tasksList, setTasksList] = useState<ITask[]>([]);
   const [activeDate, setActiveDate] = useState<Date>(new Date());
 
-  const onClickDate = (item: number) => {
+  const onClickDate = (day: number, month: number) => {
     if (taskDate != activeDate) {
       setTaskDate(activeDate);
     }
-    if (typeof item !== 'string' && item != -1) {
-      const newDate = new Date(activeDate.setDate(item));
+    if (typeof day !== 'string' && day != -1) {
+      let newDate = new Date(activeDate.setMonth(month));
+      newDate = new Date(activeDate.setDate(day));
       setActiveDate(newDate);
     }
-  };
-
-  const changeMonth = (n: number) => {
-    const newDate = new Date(activeDate.setMonth(activeDate.getMonth() + n));
-    setActiveDate(newDate);
-  };
-
-  const setToday = () => {
-    setActiveDate(new Date());
+    console.log(activeDate);
   };
 
   const handleTaskInputChange = (
@@ -44,7 +37,7 @@ function App() {
   const handleSubmitTask = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     addTask();
-    setTask('');
+    //setTask('');
   };
 
   const completeTask = (taskNameToDelete: string): void => {
@@ -66,12 +59,7 @@ function App() {
     >
       <Center>
         <Box>
-          <Calendar
-            activeDate={activeDate}
-            onClick={onClickDate}
-            changeMonth={changeMonth}
-            setToday={setToday}
-          />
+          <Calendar activeDate={activeDate} onClick={onClickDate} />
           <Tasks
             activeDate={activeDate}
             task={task}

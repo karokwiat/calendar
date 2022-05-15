@@ -1,4 +1,4 @@
-export const months = [
+export const months: string[] = [
   'January',
   'February',
   'March',
@@ -13,4 +13,6 @@ export const months = [
   'December',
 ];
 
-export const daysInEachMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+export const daysInEachMonth: number[] = [
+  31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
+];

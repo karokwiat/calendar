@@ -2,7 +2,7 @@ import { Box, IconButton, Text } from '@chakra-ui/react';
 import type { FC } from 'react';
 import { DefaultTheme } from '../../assets/styles/theme';
 import { MdClose } from 'react-icons/md';
-import { ITask } from './Interfaces';
+import { ITask } from '../../interfaces/Interfaces';
 
 type Props = {
   task: ITask;

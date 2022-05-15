@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { Box, Text } from '@chakra-ui/react';
-import { months } from './consts';
+import { months } from '../../consts/consts';
 import { DefaultTheme } from '../../assets/styles/theme';
 
 type Props = {

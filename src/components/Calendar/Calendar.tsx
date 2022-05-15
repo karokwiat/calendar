@@ -3,21 +3,14 @@ import { Box } from '@chakra-ui/react';
 import { DefaultTheme } from '../../assets/styles/theme';
 import CalendarHeader from './CalendarHeader';
 import DateHeader from './DateHeader';
-import CalendarBody from './CalendarBody';
+import CalendarDays from './CalendarDays';
 
 type Props = {
   activeDate: Date;
-  onClick: (item: number) => void;
-  changeMonth: (n: number) => void;
-  setToday: () => void;
+  onClick: (day: number, month: number) => void;
 };
 
-const Calendar: FC<Props> = ({
-  activeDate,
-  onClick,
-  changeMonth,
-  setToday,
-}) => {
+const Calendar: FC<Props> = ({ activeDate, onClick }) => {
   return (
     <Box>
       <Box
@@ -31,12 +24,8 @@ const Calendar: FC<Props> = ({
         flexDirection="column"
         justifyContent="center"
       >
-        <CalendarHeader
-          changeMonth={changeMonth}
-          activeDate={activeDate}
-          setToday={setToday}
-        />
-        <CalendarBody activeDate={activeDate} onClick={onClick} />
+        <CalendarHeader activeDate={activeDate} onClick={onClick} />
+        <CalendarDays activeDate={activeDate} onClick={onClick} />
       </Box>
       <DateHeader activeDate={activeDate} />
     </Box>
