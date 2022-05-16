@@ -14,15 +14,19 @@ const CalendarDays: FC<Props> = ({ activeDate, onClick }) => {
     activeDate.getMonth(),
     1
   );
-  let weekdayOfFirstDay: number = firstDayOfMonth.getDay() + 6;
+  // Sunday is the first day of the week = 0, Monday = 1, Tuesday = 2, etc.
+  let weekdayOfFirstDay: number = firstDayOfMonth.getDay();
   let currentDays: ICalendarDay[] = [];
 
   for (let day = 0; day < 42; day++) {
     if (day === 0 && weekdayOfFirstDay === 0) {
-      firstDayOfMonth.setDate(firstDayOfMonth.getDate() - 7);
+      // Check what is the first day of the current month view.
+      // If the current month first day is Sunday (0), then the first day in the
+      // calendar view will be the last Monday of the previous month.
+      firstDayOfMonth.setDate(firstDayOfMonth.getDate() - 6);
     } else if (day === 0) {
       firstDayOfMonth.setDate(
-        firstDayOfMonth.getDate() + (day - weekdayOfFirstDay)
+        firstDayOfMonth.getDate() + (day - weekdayOfFirstDay + 1)
       );
     } else {
       firstDayOfMonth.setDate(firstDayOfMonth.getDate() + 1);
@@ -56,14 +60,12 @@ const CalendarDays: FC<Props> = ({ activeDate, onClick }) => {
             position="relative"
             border={`0.1px solid ${DefaultTheme.colors.lines}`}
             bg={
-              day.number == activeDate.getDate() &&
-              day.month == activeDate.getMonth()
+              day.currentMonth && day.selected
                 ? DefaultTheme.colors.activeDate
                 : DefaultTheme.colors.transparent
             }
             color={
-              day.number == activeDate.getDate() &&
-              day.month == activeDate.getMonth()
+              day.currentMonth && day.selected
                 ? DefaultTheme.colors.white
                 : DefaultTheme.colors.text
             }
@@ -75,7 +77,7 @@ const CalendarDays: FC<Props> = ({ activeDate, onClick }) => {
               right="7px"
               bottom="4px"
               fontSize={DefaultTheme.fontSize.s}
-              opacity={day.month != activeDate.getMonth() ? 0.3 : 1}
+              opacity={!day.currentMonth ? 0.3 : 1}
             >
               {`${day.number}.`}
             </Text>
